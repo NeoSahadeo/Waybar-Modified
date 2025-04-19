@@ -109,6 +109,7 @@
 #ifdef HAVE_SYSTEMD_MONITOR
 #include "modules/systemd_failed_units.hpp"
 #endif
+#include "modules/boat_playback.hpp"
 #include "modules/cffi.hpp"
 #include "modules/custom.hpp"
 #include "modules/image.hpp"
@@ -340,6 +341,9 @@ waybar::AModule* waybar::Factory::makeModule(const std::string& name,
     }
     if (ref.compare(0, 5, "cffi/") == 0 && ref.size() > 5) {
       return new waybar::modules::CFFI(ref.substr(5), id, config_[name]);
+    }
+    if (ref == "boat_playback") {
+      return new waybar::modules::BoatPlayback(id, config_[name]);
     }
   } catch (const std::exception& e) {
     auto err = fmt::format("Disabling module \"{}\", {}", name, e.what());
